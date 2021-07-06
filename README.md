@@ -7,7 +7,7 @@ The platform is built with these purposes in mind:
 
     1. To learn how to work with Blazor in asp.net.
     2. To learn how to work with MongoDb.
-    3. To have an excuse to try out Azure Devops.
+    3. To get more experience with planning and developing an application from scratch.
     4. To practice clean architecture (again).
 
 Another major reason for the project is to try out some lessons that I learned from my previous project, most notably to separate the Identity database from all the other data in the system -- this is expected to reduce pain by a lot.
