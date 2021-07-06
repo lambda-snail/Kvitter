@@ -1,7 +1,7 @@
 
 # Kvitter
 
-A small social media platform. *Kvitter* in Swedish is the sound that a bird makes when it's singing. Of course, any resemblance to social media platforms that may or may not exist, is entirely eccidental :)
+A small social media platform. *Kvitter* in Swedish is the sound that a bird makes when it's singing. Of course, any resemblance to social media platforms that may or may not exist already, is entirely accidental :)
 
 The platform is built with these purposes in mind:
 
