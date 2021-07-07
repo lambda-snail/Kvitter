@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Flow.Core.DomainModels;
+using Flow.Core.Mediate.UpsertUser;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -83,6 +85,11 @@ namespace FlowUI.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    await _mediator.Send(
+                        new UpsertUserRequest { 
+                            User = new User { UserId = new Guid(user.Id), SignUpTime = DateTimeOffset.UtcNow }
+                        });
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

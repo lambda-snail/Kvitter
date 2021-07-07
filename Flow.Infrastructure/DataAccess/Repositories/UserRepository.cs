@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using Flow.Core.Contracts;
+using MongoDB.Bson;
 
 namespace Flow.Infrastructure.DataAccess.Repositories
 {
@@ -17,13 +18,17 @@ namespace Flow.Infrastructure.DataAccess.Repositories
             _usersDb = database.GetCollection<User>("Users");
         }
 
-        // Create and update with same method?
-        public async Task CreateUser(User newUser)
+        public async Task UpsertUserAsync(User user)
         {
-
+            BsonBinaryData binGuid = new BsonBinaryData(user.UserId, GuidRepresentation.Standard);
+            await _usersDb.ReplaceOneAsync(
+                new BsonDocument("_id", binGuid),
+                user,
+                new ReplaceOptions { IsUpsert = true }
+            );
         }
 
-        public async Task<User> GetUserById(Guid userId)
+        public async Task<User> GetUserByIdAsync(Guid userId)
         {
             return null;
         }
@@ -33,7 +38,7 @@ namespace Flow.Infrastructure.DataAccess.Repositories
             return null;
         }
 
-        public async Task DeleteUser(Guid userId)
+        public async Task DeleteUserAsync(Guid userId)
         {
 
         }

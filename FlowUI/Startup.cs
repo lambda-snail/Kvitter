@@ -20,6 +20,8 @@ using System.Threading.Tasks;
 using Flow.Infrastructure.DataAccess.Repositories;
 using MediatR;
 using Flow.Core.Contracts;
+using Flow.Core.DomainModels;
+using MongoDB.Bson.Serialization;
 
 namespace FlowUI
 {
@@ -47,11 +49,14 @@ namespace FlowUI
             
             services.AddSingleton<WeatherForecastService>(); // To be removed
 
-            services.AddMediatR(typeof(Startup));
+            //services.AddMediatR(typeof(Startup));
+            services.AddMediatR(typeof(User));
 
             // Set up MongoDb
             if (!string.IsNullOrWhiteSpace(Configuration.GetConnectionString("MongoDb")))
                 services.AddSingleton<IMongoClient>(new MongoClient(Configuration.GetConnectionString("MongoDb")));
+
+            RegisterBsonClassMaps();
 
             services.AddScoped<IUserRepository, UserRepository>();
         }
@@ -84,6 +89,16 @@ namespace FlowUI
                 endpoints.MapControllers();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
+            });
+        }
+
+        /** Register class maps for MongoDb */
+        public void RegisterBsonClassMaps()
+        {
+            BsonClassMap.RegisterClassMap<User>(cm =>
+            {
+                cm.AutoMap();
+                cm.MapIdProperty(user => user.UserId);
             });
         }
     }
