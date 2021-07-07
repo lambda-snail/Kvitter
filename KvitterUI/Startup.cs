@@ -1,6 +1,5 @@
 using Infrastructure.Areas.Identity;
 using Infrastructure.DataAccess;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -12,10 +11,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Kvitter.Infrastructure.DataAccess.Repositories;
 
 namespace KvitterUI
 {
@@ -40,7 +42,14 @@ namespace KvitterUI
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-            services.AddSingleton<WeatherForecastService>();
+            
+            services.AddSingleton<WeatherForecastService>(); // To be removed
+
+            // Set up MongoDb
+            if (!string.IsNullOrWhiteSpace(Configuration.GetConnectionString("MongoDb")))
+                services.AddSingleton<IMongoClient>(new MongoClient(Configuration.GetConnectionString("MongoDb")));
+
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
