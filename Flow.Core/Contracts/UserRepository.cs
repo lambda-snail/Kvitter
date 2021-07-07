@@ -8,15 +8,16 @@ namespace Flow.Core.Contracts
 {
     public interface IUserRepository
     {
-        Task CreateUser(User newUser);
+        /** Insert or update a User into the database. */
+        Task UpsertUserAsync(User newUser);
 
         /** Removes the user with the specified id, if it exists in the database. */
-        Task DeleteUser(Guid userId);
+        Task DeleteUserAsync(Guid userId);
 
         /** Returns a list of users that fulfill the provided predicate. */
         Task<ICollection<User>> FindUsersAsync(Func<User, bool> predicate);
 
         /** Retreive the suer with the specified id, or null if it does not exist. */
-        Task<User> GetUserById(Guid userId);
+        Task<User> GetUserByIdAsync(Guid userId);
     }
 }

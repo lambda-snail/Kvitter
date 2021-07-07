@@ -16,6 +16,9 @@ namespace Flow.Core.DomainModels
         public int Age { get; set; }
         public String Description { get; set; }
 
+        /** The date and time when the user signed up. */
+        public DateTimeOffset SignUpTime { get; set; }
+
         //public ICollection<Post> Posts { get; set; }
         //public ICollection<User> Friends { get; set; }
         //public ICollection<User> BlockedUsers { get; set; }
