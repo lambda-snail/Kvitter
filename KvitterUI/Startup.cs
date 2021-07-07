@@ -18,6 +18,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Kvitter.Infrastructure.DataAccess.Repositories;
+using MediatR;
 
 namespace KvitterUI
 {
@@ -44,6 +45,8 @@ namespace KvitterUI
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             
             services.AddSingleton<WeatherForecastService>(); // To be removed
+
+            services.AddMediatR(typeof(Startup));
 
             // Set up MongoDb
             if (!string.IsNullOrWhiteSpace(Configuration.GetConnectionString("MongoDb")))
