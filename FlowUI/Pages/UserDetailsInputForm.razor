@@ -1,11 +1,58 @@
 ﻿@page "/DetailsForm"
 @attribute [Authorize]
 
-<AuthorizeView>
-    <Authorized>
-        <h3>Welcome user with Id: @(LoggedInUser?.UserId.ToString()??"Loading...") </h3>
-    </Authorized>
-    <NotAuthorized>
-        <h3>Ooops, it seems you are not logged in!</h3>
-    </NotAuthorized>
-</AuthorizeView>
+
+        <h3>Edit Profile</h3>
+
+        <p>
+            Edit your user details here, and press submit when done. Remember that this information is visible to other users as well.
+        </p>
+
+        <p>User id: @(LoggedInUser?.UserId.ToString()??"Loading...")</p>
+
+        <p><em>Signed up: @(LoggedInUser?.SignUpTime.ToLocalTime().ToString()??"Loading...") (local time).</em></p>
+
+        <EditForm Model="@LoggedInUser"
+                  OnValidSubmit="@HandleValidSubmit"
+                  OnInvalidSubmit="@HandleInvalidSubmit">
+
+            <div class="form-group col-md-6">
+                <label for="first-name">First Name</label>
+                <InputText id="first-name"
+                           class="form-control"
+                           @bind-Value="@LoggedInUser.FirstName">
+                </InputText>
+                <small id="first-name-small" class="form-text text-muted">Enter your first name here.</small>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="last-name">Last Name</label>
+                <InputText id="last-name"
+                           class="form-control"
+                           @bind-Value="@LoggedInUser.LastName">
+                </InputText>
+                <small id="last-name-small" class="form-text text-muted">Enter your last name here.</small>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="description">Description</label>
+                <InputTextArea id="description"
+                               class="form-control"
+                               @bind-Value="@LoggedInUser.Description">
+                </InputTextArea>
+                <small id="description-small" class="form-text text-muted">Describe yourself briefly. This text will be seen by other users navigating to your profile page.</small>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="age">Description</label>
+                <InputTextArea id="age"
+                               class="form-control"
+                               @bind-Value="@LoggedInUser.Age">
+                </InputTextArea>
+                <small id="age-small" class="form-text text-muted">Enter your age.</small>
+            </div>
+
+        </EditForm>
+
+
+    

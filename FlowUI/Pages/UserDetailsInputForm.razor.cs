@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
+
 namespace FlowUI.Pages
 {
     public partial class UserDetailsInputForm
@@ -18,7 +19,7 @@ namespace FlowUI.Pages
 
         [CascadingParameter]
         protected Task<AuthenticationState> authenticationStateTask { get; set; }
-        private User LoggedInUser { get; set; }
+        private User LoggedInUser { get; set; } = new User();
 
         public UserDetailsInputForm() { }
         
@@ -27,6 +28,16 @@ namespace FlowUI.Pages
             AuthenticationState authenticationState = await authenticationStateTask;
             string userId = authenticationState.User.FindFirstValue(ClaimTypes.NameIdentifier);
             LoggedInUser = await _mediator.Send(new GetUserByIdRequest<User> { UserId = Guid.Parse(userId) });
+        }
+
+        protected async Task HandleValidSubmit()
+        {
+
+        }
+
+        protected async Task HandleInvalidSubmit()
+        {
+
         }
     }
 }
