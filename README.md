@@ -11,12 +11,15 @@ A light-weight social media platform. The platform is built with these purposes 
 Another major reason for the project is to try out some lessons that I learned from my previous project, most notably to separate the Identity database from all the other data in the system -- this is expected to reduce pain by a lot.
 
 
+## Libraries
+
+The platform uses MediatR for CQRS and AutoMapper to facilitate mapping between objects in different layers.
+
   
 ## Roadmap
 
 The project just started, so there is a lot of work to be done. Some features that I aim to implement are (not in order):
 
-- User registration/login
 - Posting content to the feed
 - Viewing the feeds of other users ("world feed")
 - Connecting with other users
@@ -26,7 +29,11 @@ The project just started, so there is a lot of work to be done. Some features th
 - "Mentions" in posts
 - Notifications
 
-If I have more time:
+### Implemented
+
+- User registration/login
+
+### If I have more time:
 
 - Instant messaging with friends
 - Blocking other users
