@@ -1,0 +1,11 @@
+﻿@page "/DetailsForm"
+@attribute [Authorize]
+
+<AuthorizeView>
+    <Authorized>
+        <h3>Welcome user with Id: @(LoggedInUser?.UserId.ToString()??"Loading...") </h3>
+    </Authorized>
+    <NotAuthorized>
+        <h3>Ooops, it seems you are not logged in!</h3>
+    </NotAuthorized>
+</AuthorizeView>
