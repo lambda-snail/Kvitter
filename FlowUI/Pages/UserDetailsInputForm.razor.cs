@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Flow.Core.DomainModels;
+using Flow.Core.Mediate.UpsertUser;
 using Flow.Core.Mediate.UserQuery;
 using FlowUI.ViewModels;
 using MediatR;
@@ -21,6 +22,9 @@ namespace FlowUI.Pages
         [Inject]
         public IMapper _mapper { get; set; }
 
+        [Inject]
+        public NavigationManager _navigationManager { get; set; }
+
 
         [CascadingParameter]
         protected Task<AuthenticationState> authenticationStateTask { get; set; }
@@ -37,7 +41,8 @@ namespace FlowUI.Pages
 
         protected async Task HandleValidSubmit()
         {
-
+            await _mediator.Send(new UpsertUserRequest { User = _mapper.Map<User>(LoggedInUser) });
+            _navigationManager.NavigateTo("/");
         }
 
         protected async Task HandleInvalidSubmit()

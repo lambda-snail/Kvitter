@@ -16,6 +16,7 @@ namespace FlowUI.ViewModels
         public string LastName { get; set; }
 
         [Required]
+        [RegularExpression("(?:1\\d\\d)|(?:[1-9]\\d)|(?:[1-9])", ErrorMessage = "Age must be greater than 0 and less than 199.")]
         public string Age { get; set; } // Form cannot map to int
 
         [Required]
