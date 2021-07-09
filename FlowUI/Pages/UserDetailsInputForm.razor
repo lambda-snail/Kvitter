@@ -16,6 +16,9 @@
           OnValidSubmit="@HandleValidSubmit"
           OnInvalidSubmit="@HandleInvalidSubmit">
 
+    <DataAnnotationsValidator />
+    <ValidationSummary></ValidationSummary>
+
     <div class="form-group col-md-6">
         <label for="first-name">First Name</label>
         <InputText id="first-name"
@@ -23,7 +26,9 @@
                    @bind-Value="@LoggedInUser.FirstName">
         </InputText>
         <small id="first-name-small" class="form-text text-muted">Enter your first name here.</small>
+        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => LoggedInUser.FirstName)" />
     </div>
+
 
     <div class="form-group col-md-6">
         <label for="last-name">Last Name</label>
@@ -32,6 +37,27 @@
                    @bind-Value="@LoggedInUser.LastName">
         </InputText>
         <small id="last-name-small" class="form-text text-muted">Enter your last name here.</small>
+        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => LoggedInUser.LastName)" />
+    </div>
+
+    <div class="form-group col-md-6">
+        <label for="age">Age</label>
+        <InputText id="age"
+                       class="form-control"
+                       @bind-Value="@LoggedInUser.Age">
+        </InputText>
+        <small id="age-small" class="form-text text-muted">Enter your age.</small>
+        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => LoggedInUser.Age)" />
+    </div>
+
+    <div class="form-group col-md-6">
+        <label for="short-description">Brief Description</label>
+        <InputText id="short-description"
+                   class="form-control"
+                   @bind-Value="@LoggedInUser.ShortDescription">
+        </InputText>
+        <small id="short-description-small" class="form-text text-muted">A brief description at most 64 characters long.</small>
+        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => LoggedInUser.ShortDescription)" />
     </div>
 
     <div class="form-group col-md-6">
@@ -41,16 +67,10 @@
                        @bind-Value="@LoggedInUser.Description">
         </InputTextArea>
         <small id="description-small" class="form-text text-muted">Describe yourself briefly. This text will be seen by other users navigating to your profile page.</small>
+        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => LoggedInUser.Description)" />
     </div>
 
-    <div class="form-group col-md-6">
-        <label for="age">Age</label>
-        <InputTextArea id="age"
-                       class="form-control"
-                       @bind-Value="@LoggedInUser.Age">
-        </InputTextArea>
-        <small id="age-small" class="form-text text-muted">Enter your age.</small>
-    </div>
+
 </EditForm>
 
 
