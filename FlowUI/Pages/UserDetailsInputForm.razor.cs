@@ -1,5 +1,7 @@
-﻿using Flow.Core.DomainModels;
+﻿using AutoMapper;
+using Flow.Core.DomainModels;
 using Flow.Core.Mediate.UserQuery;
+using FlowUI.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -16,10 +18,13 @@ namespace FlowUI.Pages
     {
         [Inject]
         public IMediator _mediator { get; set; }
+        [Inject]
+        public IMapper _mapper { get; set; }
+
 
         [CascadingParameter]
         protected Task<AuthenticationState> authenticationStateTask { get; set; }
-        private User LoggedInUser { get; set; } = new User();
+        private UserViewModel LoggedInUser { get; set; } = new UserViewModel();
 
         public UserDetailsInputForm() { }
         
@@ -27,7 +32,7 @@ namespace FlowUI.Pages
         {
             AuthenticationState authenticationState = await authenticationStateTask;
             string userId = authenticationState.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            LoggedInUser = await _mediator.Send(new GetUserByIdRequest<User> { UserId = Guid.Parse(userId) });
+            LoggedInUser = _mapper.Map<UserViewModel>(await _mediator.Send(new GetUserByIdRequest<User> { UserId = Guid.Parse(userId) }));
         }
 
         protected async Task HandleValidSubmit()

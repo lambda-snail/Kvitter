@@ -11,10 +11,10 @@ namespace Flow.Core.DomainModels
     {
         /** This user is linked to an IdentituUser via the user id, which is the same in both databases. */
         public Guid UserId { get; set; }
-        public String FirstName { get; set; }
-        public String LastName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public int Age { get; set; }
-        public String Description { get; set; }
+        public string Description { get; set; }
 
         /** The date and time when the user signed up. */
         public DateTimeOffset SignUpTime { get; set; }

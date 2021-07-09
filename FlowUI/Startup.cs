@@ -22,6 +22,7 @@ using MediatR;
 using Flow.Core.Contracts;
 using Flow.Core.DomainModels;
 using MongoDB.Bson.Serialization;
+using AutoMapper;
 
 namespace FlowUI
 {
@@ -48,6 +49,10 @@ namespace FlowUI
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             
             services.AddSingleton<WeatherForecastService>(); // To be removed
+
+            //var autoMapperConfig = AutoMapperConfig.Bootstrap();
+            services.AddAutoMapper(typeof(Startup));
+            
 
             //services.AddMediatR(typeof(Startup));
             services.AddMediatR(typeof(User));
