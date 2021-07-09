@@ -11,6 +11,13 @@
     </div>
 
     <div class="content px-4">
-        @Body
+        <AuthorizeView>
+            <Authorized>
+                @Body
+            </Authorized>
+            <NotAuthorized>
+                <h3>Ooops, it seems you are not logged in!</h3>
+            </NotAuthorized>
+        </AuthorizeView>
     </div>
 </div>
