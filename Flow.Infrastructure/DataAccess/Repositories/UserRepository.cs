@@ -30,7 +30,7 @@ namespace Flow.Infrastructure.DataAccess.Repositories
 
         public async Task<User> GetUserByIdAsync(Guid userId)
         {
-            return null;
+            return await _usersDb.Find(user => user.UserId == userId).FirstOrDefaultAsync();
         }
 
         public async Task<ICollection<User>> FindUsersAsync(Func<User, bool> predicate)
