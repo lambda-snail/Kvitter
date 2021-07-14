@@ -47,8 +47,6 @@ namespace FlowUI
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-            
-            services.AddSingleton<WeatherForecastService>(); // To be removed
 
             //var autoMapperConfig = AutoMapperConfig.Bootstrap();
             services.AddAutoMapper(typeof(Startup));
