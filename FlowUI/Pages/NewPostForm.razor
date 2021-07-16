@@ -1,0 +1,46 @@
+﻿
+@if (ShowDialog)
+{
+
+    <div class="modal fade show d-block" id="new-post-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titleLabel">New Post</h5>
+                    <button type="button" class="close" @onclick="@CloseDialog" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <EditForm Model="@Post"
+                              OnValidSubmit="@HandleValidSubmit"
+                              OnInvalidSubmit="@HandleInvalidSubmit">
+
+                        <DataAnnotationsValidator />
+                        <ValidationSummary></ValidationSummary>
+
+                        <div class="form-group col-md-10">
+                            <label for="post-content">Description</label>
+                            <InputTextArea id="post-content"
+                                           class="form-control"
+                                           @bind-Value="@Post.Content">
+                            </InputTextArea>
+                            <small id="post-content-small" class="form-text text-muted">Share your thoughts with the world by posting! But remember to keep things civil.</small>
+                            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Post.Content)" />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary edit-btn">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="@CloseDialog">Close</button>
+                    </EditForm>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
