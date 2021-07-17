@@ -18,7 +18,7 @@ namespace Flow.Core.Mediate.GetPosts
 
         public async Task<ICollection<Post>> Handle(GettAllPostsPagedRequest request, CancellationToken cancellationToken)
         {
-            return await _repository.GetPosts(request.Skip, request.Take);
+            return await _repository.GetPostsDescendingOrderByDate(request.Skip, request.Take);
         }
     }
 }

@@ -40,11 +40,12 @@ namespace Flow.Infrastructure.DataAccess.Repositories
             await _database.FindOneAndReplaceAsync(filter, post, options);
         }
 
-        public async Task<ICollection<Post>> GetPosts(int skip, int take)
+        public async Task<ICollection<Post>> GetPostsDescendingOrderByDate(int skip, int take)
         {
             if (skip >= 0 || take >= 0)
             {
                 return await _database.Find(new BsonDocument())
+                                       .Sort(Builders<Post>.Sort.Descending(post => post.PostedDateTime))
                                        .Skip(skip)
                                        .Limit(take)
                                        .ToListAsync();

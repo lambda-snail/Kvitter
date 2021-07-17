@@ -19,7 +19,7 @@ namespace Flow.Core.Contracts
          * <param name="skip">The number of posts to skip.</param>
          * <param name="take">The number of posts to take after skipping skip posts.</param>
          */
-        Task<ICollection<Post>> GetPosts(int skip, int take);
+        Task<ICollection<Post>> GetPostsDescendingOrderByDate(int skip, int take);
 
         /**
          * Retreive a list of all posts by a given user. Use the skip and limit parameters to limit the query, saving resouces
