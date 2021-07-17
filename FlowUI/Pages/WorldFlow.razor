@@ -1,4 +1,5 @@
 ﻿@page "/worldflow"
+@attribute [Authorize]
 
 <h3>WorldFlow</h3>
 
@@ -29,14 +30,7 @@
     <Virtualize ItemsProvider="LoadPostsPaged" ItemSize="250">
         <ItemContent>
 
-            <div class="card text-white bg-dark mb-3 col-6" style="max-width: 36rem;">
-                <div class="card-header">User 1</div>
-                <div class="card-body">
-                    <h5 class="card-title">@context.Title</h5>
-                    <p class="card-text">@context.Content</p>
-                </div>
-                <p>Post created on @context.PostedDateTime.ToLocalTime().</p>
-            </div>
+            <FlowUI.Components.PostCardComponent Post="@context" />
 
         </ItemContent>
 
