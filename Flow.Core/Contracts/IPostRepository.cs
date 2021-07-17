@@ -14,8 +14,8 @@ namespace Flow.Core.Contracts
         Task<ICollection<Post>> GetPostByUserId(Guid userId);
 
         /**
-         * Retreive a list of all posts by any user. Use the skip and limit parameters to limit the query, saving resouces
-         * by only fetching the posts that you need at the moment.
+         * Retreive a list of all posts by any user beginning with the newest posts. Use the skip and limit parameters to
+         * limit the query, saving resouces by only fetching the posts that you need at the moment.
          * <param name="skip">The number of posts to skip.</param>
          * <param name="take">The number of posts to take after skipping skip posts.</param>
          */
