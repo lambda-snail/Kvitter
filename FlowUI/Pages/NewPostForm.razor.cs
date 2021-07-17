@@ -79,7 +79,7 @@ namespace FlowUI.Pages
         {
             AuthenticationState authenticationState = await authenticationStateTask;
             string userId = authenticationState.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return await _mediator.Send(new GetUserByIdRequest<User> { UserId = Guid.Parse(userId) });
+            return await _mediator.Send(new GetUserByIdRequest { UserId = Guid.Parse(userId) });
         }
     }
 }

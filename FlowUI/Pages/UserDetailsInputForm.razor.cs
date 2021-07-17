@@ -23,7 +23,6 @@ namespace FlowUI.Pages
         [Inject]
         public NavigationManager _navigationManager { get; set; }
 
-
         [CascadingParameter]
         protected Task<AuthenticationState> authenticationStateTask { get; set; }
 
@@ -35,7 +34,7 @@ namespace FlowUI.Pages
         {
             AuthenticationState authenticationState = await authenticationStateTask;
             string userId = authenticationState.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            LoggedInUser = _mapper.Map<UserViewModel>(await _mediator.Send(new GetUserByIdRequest<User> { UserId = Guid.Parse(userId) }));
+            LoggedInUser = _mapper.Map<UserViewModel>(await _mediator.Send(new GetUserByIdRequest { UserId = Guid.Parse(userId) }));
         }
 
         protected async Task HandleValidSubmit()
