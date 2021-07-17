@@ -22,8 +22,15 @@ namespace Flow.Core.Contracts
         Task<ICollection<Post>> GetPostByUserId(Guid userId, int skip, int take);
 
         /**
-         * Update an existing post or insert new post if the post does not exist.
+         * Insert new post if the post does not exist.
+         * <exception cref="ArgumentException">Thrown when the Id of the provided Post is not null or default.</exception>
          */
-        Task UpsertPost(Post post);
+        Task InsertPost(Post post);
+
+        /**
+         * Update an existing post.
+         * <exception cref="ArgumentException">Thrown when the Id of the provided Post is null or default.</exception>
+         */
+        Task UpdatePost(Post post);
     }
 }

@@ -18,21 +18,26 @@ namespace Flow.Infrastructure.DataAccess.Repositories
             _database = database.GetCollection<Post>("Posts");
         }
 
-        public async Task UpsertPost(Post post)
+        public async Task InsertPost(Post post)
         {
+            if (post.PostId != null || post.PostId != Guid.Empty)
+            {
+                throw new ArgumentException("Error: Attempting to add a post with non-null or non-default Id. Did you mean to update instead?");
+            }
+
             await _database.InsertOneAsync(post);
+        }
 
-            //BsonBinaryData binGuid = new BsonBinaryData(post.PostId, GuidRepresentation.Standard);
-            
-            /*await _database.ReplaceOneAsync(
-                //new BsonDocument("_id", binGuid),
-                p => p.PostId == post.PostId,
-                post,
-                new ReplaceOptions { IsUpsert = false });*/
+        public async Task UpdatePost(Post post)
+        {
+            if (post.PostId == null || post.PostId == Guid.Empty)
+            {
+                throw new ArgumentException("Error: Attempting to update a post with null or default Id. Did you mean to insert instead?");
+            }
 
-            //var filter = Builders<Post>.Filter.Where(p => p.PostId == post.PostId);
-            //var options = new FindOneAndReplaceOptions<Post, Post> { IsUpsert = true };
-            //await _database.FindOneAndReplaceAsync(filter, post, options);
+            var filter = Builders<Post>.Filter.Where(p => p.PostId == post.PostId);
+            var options = new FindOneAndReplaceOptions<Post, Post> { IsUpsert = true };
+            await _database.FindOneAndReplaceAsync(filter, post, options);
         }
 
         public async Task<ICollection<Post>> GetPostByUserId(Guid userId)

@@ -16,7 +16,7 @@ namespace Flow.Core.Mediate.InsertPost
 
         public async Task<Unit> Handle(InsertPostRequest request, CancellationToken cancellationToken)
         {
-            await _repository.UpsertPost(request.Post);
+            await _repository.InsertPost(request.Post);
             return Unit.Value;
         }
     }
