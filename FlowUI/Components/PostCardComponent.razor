@@ -1,0 +1,20 @@
+﻿<div class="card text-white bg-dark mb-3 col-6" style="max-width: 36rem;">
+
+    @if (PostOwner != null)
+    {
+        <div class="card-header">@PostOwner.FirstName @PostOwner.LastName</div>
+    }
+    else
+    {
+        <div class="card-header">Fetching the author, please wait ...</div>
+    }
+
+    <div class="card-body">
+        <h5 class="card-title">@(Post?.Title??"Loading ...")</h5>
+        <p class="card-text">@(Post?.Content??"Loading ...")</p>
+    </div>
+    @if (Post != null)
+    {
+        <p>Post created on @Post.PostedDateTime.ToLocalTime().</p>
+    }
+</div>
