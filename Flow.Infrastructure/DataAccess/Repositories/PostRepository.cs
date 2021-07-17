@@ -20,7 +20,7 @@ namespace Flow.Infrastructure.DataAccess.Repositories
 
         public async Task InsertPost(Post post)
         {
-            if (post.PostId != null || post.PostId != Guid.Empty)
+            if (post.PostId != Guid.Empty)
             {
                 throw new ArgumentException("Error: Attempting to add a post with non-null or non-default Id. Did you mean to update instead?");
             }
@@ -30,7 +30,7 @@ namespace Flow.Infrastructure.DataAccess.Repositories
 
         public async Task UpdatePost(Post post)
         {
-            if (post.PostId == null || post.PostId == Guid.Empty)
+            if (post.PostId == Guid.Empty)
             {
                 throw new ArgumentException("Error: Attempting to update a post with null or default Id. Did you mean to insert instead?");
             }
@@ -40,6 +40,21 @@ namespace Flow.Infrastructure.DataAccess.Repositories
             await _database.FindOneAndReplaceAsync(filter, post, options);
         }
 
+        public async Task<ICollection<Post>> GetPosts(int skip, int take)
+        {
+            if (skip >= 0 || take >= 0)
+            {
+                return await _database.Find(new BsonDocument())
+                                       .Skip(skip)
+                                       .Limit(take)
+                                       .ToListAsync();
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("Error: Attemtping to skip or retreive a negative number of posts.");
+            }
+        }
+
         public async Task<ICollection<Post>> GetPostByUserId(Guid userId)
         {
             return await GetPostByUserId(userId, 0, 0);
@@ -47,14 +62,22 @@ namespace Flow.Infrastructure.DataAccess.Repositories
 
         public async Task<ICollection<Post>> GetPostByUserId(Guid userId, int skip, int take)
         {
-            if (skip < 0 || take < 0)
+            if (skip >= 0 || take >= 0)
             {
-                throw new ArgumentOutOfRangeException("Error: attemtping to skip or retreive a negative number of posts.");
+                return await _database.Find(post => post.PostOwnerId == userId)
+                                      .Skip(skip)
+                                      .Limit(take)
+                                      .ToListAsync();
             }
             else
             {
-                return await _database.Find(post => post.PostOwnerId == userId).Skip(skip).Limit(take).ToListAsync();
+                throw new ArgumentOutOfRangeException("Error: Attemtping to skip or retreive a negative number of posts.");
             }
+        }
+
+        public async Task<long> GetEstimatedNumberOfPosts()
+        {
+            return await _database.EstimatedDocumentCountAsync();
         }
     }
 }

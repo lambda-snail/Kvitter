@@ -14,6 +14,14 @@ namespace Flow.Core.Contracts
         Task<ICollection<Post>> GetPostByUserId(Guid userId);
 
         /**
+         * Retreive a list of all posts by any user. Use the skip and limit parameters to limit the query, saving resouces
+         * by only fetching the posts that you need at the moment.
+         * <param name="skip">The number of posts to skip.</param>
+         * <param name="take">The number of posts to take after skipping skip posts.</param>
+         */
+        Task<ICollection<Post>> GetPosts(int skip, int take);
+
+        /**
          * Retreive a list of all posts by a given user. Use the skip and limit parameters to limit the query, saving resouces
          * by only fetching the posts that you need at the moment.
          * <param name="skip">The number of posts to skip.</param>
@@ -32,5 +40,10 @@ namespace Flow.Core.Contracts
          * <exception cref="ArgumentException">Thrown when the Id of the provided Post is null or default.</exception>
          */
         Task UpdatePost(Post post);
+
+        /**
+         * Retreive the number of Posts in the database.
+         */
+        Task<long> GetEstimatedNumberOfPosts();
     }
 }
