@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Core.Mediate.UserQuery
 {
-    public class GetUserByIdRequestHandler : IRequestHandler<GetUserByIdRequest<User>, User>
+    public class GetUserByIdRequestHandler : IRequestHandler<GetUserByIdRequest, User>
     {
         private readonly IUserRepository _repository;
 
@@ -15,7 +15,7 @@ namespace Flow.Core.Mediate.UserQuery
         {
             _repository = repository;
         }
-        public Task<User> Handle(GetUserByIdRequest<User> request, CancellationToken cancellationToken)
+        public Task<User> Handle(GetUserByIdRequest request, CancellationToken cancellationToken)
         {
             return _repository.GetUserByIdAsync(request.UserId);
         }

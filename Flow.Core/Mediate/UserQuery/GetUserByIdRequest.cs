@@ -1,9 +1,10 @@
-﻿using MediatR;
+﻿using Flow.Core.DomainModels;
+using MediatR;
 using System;
 
 namespace Flow.Core.Mediate.UserQuery
 {
-    public class GetUserByIdRequest<User> : IRequest<User>
+    public class GetUserByIdRequest : IRequest<User>
     {
         public Guid UserId { get; set; }
     }
