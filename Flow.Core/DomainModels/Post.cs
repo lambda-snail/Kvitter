@@ -11,6 +11,7 @@ namespace Flow.Core.DomainModels
         public Guid PostId { get; set; }
         public Guid PostOwnerId { get; set; }
         public DateTimeOffset PostedDateTime { get; set; }
+        public string Title { get; set; }
         public string Content { get; set; }
         public List<Comment> Comments { get; set; }
 

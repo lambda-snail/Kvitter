@@ -23,6 +23,8 @@ using Flow.Core.Contracts;
 using Flow.Core.DomainModels;
 using MongoDB.Bson.Serialization;
 using AutoMapper;
+using MongoDB.Bson.Serialization.IdGenerators;
+using MongoDB.Bson;
 
 namespace FlowUI
 {
@@ -51,7 +53,6 @@ namespace FlowUI
             //var autoMapperConfig = AutoMapperConfig.Bootstrap();
             services.AddAutoMapper(typeof(Startup));
             
-
             //services.AddMediatR(typeof(Startup));
             services.AddMediatR(typeof(User));
 
@@ -62,6 +63,7 @@ namespace FlowUI
             RegisterBsonClassMaps();
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,6 +105,20 @@ namespace FlowUI
                 cm.AutoMap();
                 cm.MapIdProperty(user => user.UserId);
             });
+
+            BsonClassMap.RegisterClassMap<Post>(cm =>
+            {
+                cm.AutoMap();
+                cm.SetIdMember(cm.GetMemberMap(post => post.PostId));
+                cm.IdMemberMap.SetIgnoreIfDefault(true);
+                cm.IdMemberMap.SetIdGenerator(CombGuidGenerator.Instance);
+            });
+
+            
+            //BsonDefaults.GuidRepresentation = GuidRepresentation.Standard;
+
+            //BsonSerializer.UseNullIdChecker = true; // used for reference types
+            //BsonSerializer.UseZeroIdChecker = true; // used for value types
         }
     }
 }

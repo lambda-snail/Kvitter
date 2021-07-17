@@ -1,21 +1,46 @@
-﻿using Flow.Core.DomainModels;
+﻿using AutoMapper;
+using Flow.Core.DomainModels;
+using Flow.Core.Mediate.InsertPost;
+using Flow.Core.Mediate.UserQuery;
+using FlowUI.ViewModels;
+using MediatR;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace FlowUI.Pages
 {
     public partial class NewPostForm
     {
-        public Post Post { get; set; } = new Post();
+        public NewPostViewModel Post { get; set; } = new NewPostViewModel();
 
         public bool ShowDialog { get; set; } = false;
+
+        [Inject]
+        private  IMediator _mediator { get; set; }
+
+        [Inject]
+        private IMapper _mapper { get; set; }
+        
+        [CascadingParameter]
+        private Task<AuthenticationState> authenticationStateTask { get; set; }
 
         protected override void OnInitialized()
         {
             ShowDialog = false;
         }
 
-        public void HandleValidSubmit()
+        public async Task HandleValidSubmit()
         {
+            Post.PostedDateTime = System.DateTimeOffset.Now;
+            Post.PostOwnerId = (await GetLoggedInUserAsync()).UserId;
+
+            Post x = _mapper.Map<Post>(Post);
+
+            await _mediator.Send( new InsertPostRequest { Post= _mapper.Map<Post>(Post) } );
+
             CloseDialog();
         }
 
@@ -46,7 +71,15 @@ namespace FlowUI.Pages
 
         private void ResetDialog()
         {
-            Post = new Post();
+            Post = new NewPostViewModel { Title = string.Empty, Content = string.Empty };
+        }
+
+        // TODO: Violates DRY, refactor to promote code reuse.
+        protected async Task<User> GetLoggedInUserAsync()
+        {
+            AuthenticationState authenticationState = await authenticationStateTask;
+            string userId = authenticationState.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return await _mediator.Send(new GetUserByIdRequest<User> { UserId = Guid.Parse(userId) });
         }
     }
 }

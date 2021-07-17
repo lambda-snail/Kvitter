@@ -21,6 +21,16 @@
                         <ValidationSummary></ValidationSummary>
 
                         <div class="form-group col-md-10">
+                            <label for="post-title">Description</label>
+                            <InputText id="post-title"
+                                       class="form-control"
+                                       @bind-Value="@Post.Title">
+                            </InputText>
+                            <small id="post-content-small" class="form-text text-muted">Choose a nifty title for your post!</small>
+                            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Post.Content)" />
+                        </div>
+
+                        <div class="form-group col-md-10">
                             <label for="post-content">Description</label>
                             <InputTextArea id="post-content"
                                            class="form-control"

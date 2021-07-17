@@ -7,8 +7,6 @@ using MediatR;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -28,6 +26,7 @@ namespace FlowUI.Pages
 
         [CascadingParameter]
         protected Task<AuthenticationState> authenticationStateTask { get; set; }
+
         private UserViewModel LoggedInUser { get; set; } = new UserViewModel();
 
         public UserDetailsInputForm() { }
