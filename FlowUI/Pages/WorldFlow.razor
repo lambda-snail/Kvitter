@@ -25,34 +25,31 @@
 <br />
 <hr />
 
-<div class="card text-white bg-dark mb-3 col-6" style="max-width: 36rem;">
-    <div class="card-header">User 1</div>
-    <div class="card-body">
-        <h5 class="card-title">Test Post 1</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-</div>
+<div class="main-post-feed">
+    <Virtualize ItemsProvider="LoadPostsPaged" ItemSize="250">
+        <ItemContent>
 
-<div class="card text-white bg-dark mb-3 col-6" style="max-width: 36rem;">
-    <div class="card-header">User 2</div>
-    <div class="card-body">
-        <h5 class="card-title">Test Post 2</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-</div>
+            <div class="card text-white bg-dark mb-3 col-6" style="max-width: 36rem;">
+                <div class="card-header">User 1</div>
+                <div class="card-body">
+                    <h5 class="card-title">@context.Title</h5>
+                    <p class="card-text">@context.Content</p>
+                </div>
+                <p>Post created on @context.PostedDateTime.ToLocalTime().</p>
+            </div>
 
-<div class="card text-white bg-dark mb-3 col-6" style="max-width: 36rem;">
-    <div class="card-header">User 1</div>
-    <div class="card-body">
-        <h5 class="card-title">Test Post 1</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-</div>
+        </ItemContent>
 
-<div class="card text-white bg-dark mb-3 col-6" style="max-width: 36rem;">
-    <div class="card-header">User 2</div>
-    <div class="card-body">
-        <h5 class="card-title">Test Post 2</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
+        <Placeholder>
+
+            <div class="card text-white bg-dark mb-3 col-6" style="max-width: 36rem;">
+                <div class="card-header">Loading...</div>
+                <div class="card-body">
+                    <h5 class="card-title">Loading ...</h5>
+                    <p class="card-text">Please wait while we are fetching things from the server!</p>
+                </div>
+            </div>
+
+        </Placeholder>
+    </Virtualize>
 </div>
