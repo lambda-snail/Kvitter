@@ -3,7 +3,7 @@
 
 <h3>WorldFlow</h3>
 
-<NewPostForm @ref="NewPostForm"></NewPostForm>
+<NewPostForm OnPostCreated="OnPostCreatedAsync" @ref="NewPostForm"></NewPostForm>
 
 <nav class="navbar navbar-dark bg-dark">
 
@@ -27,7 +27,7 @@
 <hr />
 
 <div class="main-post-feed">
-    <Virtualize ItemsProvider="LoadPostsPaged" ItemSize="250">
+    <Virtualize ItemsProvider="LoadPostsPaged" ItemSize="250" @ref="PostVirtualizer">
         <ItemContent>
 
             <PostCardComponent Post="@context" />

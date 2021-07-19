@@ -15,6 +15,8 @@ namespace FlowUI.Pages
     {
         public NewPostForm NewPostForm { get; set; }
 
+        public Virtualize<Post> PostVirtualizer { get; set; }
+
         [Inject]
         protected IMediator _mediator { get; set; }
 
@@ -31,6 +33,16 @@ namespace FlowUI.Pages
             var posts = await _mediator.Send(new GettAllPostsPagedRequest { Skip=request.StartIndex, Take=request.Count });
             var totalPostCount = await _mediator.Send(new EstimatePostCountRequest());
             return new ItemsProviderResult<Post>(posts, (int)totalPostCount); // This might need tweaking if the application grows
+        }
+
+        /**
+         * Callback for when a post is created. Refresh the component so that the new post is shown.
+         */
+        public async void OnPostCreatedAsync()
+        {
+
+            await PostVirtualizer.RefreshDataAsync();
+            StateHasChanged();
         }
 
         public void OpenNewPostForm()
