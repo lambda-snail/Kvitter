@@ -20,8 +20,6 @@ The platform uses MediatR for CQRS and AutoMapper to facilitate mapping between 
 
 The project just started, so there is a lot of work to be done. Some features that I aim to implement are (not in order):
 
-- Posting content to the feed
-- Viewing the feeds of other users ("world feed")
 - Connecting with other users
 - Viewing the feeds of friends ("friends feed")
 - Feed filter
@@ -32,6 +30,13 @@ The project just started, so there is a lot of work to be done. Some features th
 ### Implemented
 
 - User registration/login
+    + Users can edit basic details of their profile.
+
+- Posting content to the feed
+    + The page is refreshed when the user creates a post.
+
+- Viewing the feeds of other users ("world feed")
+    + Only posts that are actually visible on the screen are fetched from DB and rendered.
 
 ### If I have more time:
 
@@ -42,4 +47,4 @@ The project just started, so there is a lot of work to be done. Some features th
 
 ## License
 
-The project is released under the [MIT](https://choosealicense.com/licenses/mit/) license.
+The code is released under the [MIT](https://choosealicense.com/licenses/mit/) license.
