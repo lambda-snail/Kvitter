@@ -23,7 +23,10 @@ namespace FlowUI.Pages
 
         [Inject]
         private IMapper _mapper { get; set; }
-        
+
+        [Parameter]
+        public EventCallback OnPostCreated { get; set; }
+
         [CascadingParameter]
         private Task<AuthenticationState> authenticationStateTask { get; set; }
 
@@ -37,9 +40,9 @@ namespace FlowUI.Pages
             Post.PostedDateTime = System.DateTimeOffset.Now;
             Post.PostOwnerId = (await GetLoggedInUserAsync()).UserId;
 
-            Post x = _mapper.Map<Post>(Post);
-
             await _mediator.Send( new InsertPostRequest { Post= _mapper.Map<Post>(Post) } );
+
+            await OnPostCreated.InvokeAsync();
 
             CloseDialog();
         }
