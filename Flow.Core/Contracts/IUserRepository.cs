@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Flow.Core.Contracts
@@ -15,9 +16,14 @@ namespace Flow.Core.Contracts
         Task DeleteUserAsync(Guid userId);
 
         /** Returns a list of users that fulfill the provided predicate. */
-        Task<ICollection<User>> FindUsersAsync(Func<User, bool> predicate);
+        Task<ICollection<User>> FindUsersAsync(Expression<Func<User, bool>> predicate);
 
         /** Retreive the suer with the specified id, or null if it does not exist. */
         Task<User> GetUserByIdAsync(Guid userId);
+
+        /**
+         * Retreive the number of Users in the database.
+         */
+        Task<long> GetEstimatedNumberOfUsers();
     }
 }

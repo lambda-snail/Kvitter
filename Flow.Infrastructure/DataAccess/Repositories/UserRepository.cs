@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Flow.Core.Contracts;
 using MongoDB.Bson;
+using System.Linq.Expressions;
 
 namespace Flow.Infrastructure.DataAccess.Repositories
 {
@@ -22,7 +23,7 @@ namespace Flow.Infrastructure.DataAccess.Repositories
         {
             BsonBinaryData binGuid = new BsonBinaryData(user.UserId, GuidRepresentation.Standard);
             await _usersDb.ReplaceOneAsync(
-                new BsonDocument("_id", binGuid),
+                u => u.UserId == user.UserId,
                 user,
                 new ReplaceOptions { IsUpsert = true }
             );
@@ -33,14 +34,20 @@ namespace Flow.Infrastructure.DataAccess.Repositories
             return await _usersDb.Find(user => user.UserId == userId).FirstOrDefaultAsync();
         }
 
-        public async Task<ICollection<User>> FindUsersAsync(Func<User, bool> predicate)
+        public async Task<ICollection<User>> FindUsersAsync(Expression<Func<User, bool>> predicate)
         {
-            return null;
+            var filter = Builders<User>.Filter.Where(predicate);
+            return await _usersDb.Find(filter).ToListAsync();
         }
 
         public async Task DeleteUserAsync(Guid userId)
         {
 
+        }
+
+        public async Task<long> GetEstimatedNumberOfUsers()
+        {
+            return await _usersDb.EstimatedDocumentCountAsync();
         }
     }
 }
