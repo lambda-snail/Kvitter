@@ -1,12 +1,20 @@
 ﻿
-@if (User == null)
+@if (User == null || !HasProfilePicture())
 {
-    <p>Loading image ...</p>
+    <img alt="Default profile picture"
+         class="@CssClass"
+         src="Default-Profile-Image.jpeg"
+         style="height:@($"{ SizeY}px");width:@($"{ SizeX}px");" />
 }
 else
 {
-<img alt="" src="@("data:image/png;base64," + Convert.ToBase64String(@User.ProfilePicture, 0, @User.ProfilePicture.Length))" style="height:@($"{SizeY}px");width:@($"{SizeX}px");" />
+    <img alt="Profile picture of @User.FirstName"
+         class="@CssClass"
+         src="@("data:image/png;base64," + Convert.ToBase64String(@User.ProfilePicture, 0, @User.ProfilePicture.Length))"
+         style="height:@($"{SizeY}px");width:@($"{SizeX}px");" />
 }
+
+
 
 @code
 {
@@ -18,4 +26,11 @@ else
 
     [Parameter]
     public int SizeY { get; set; } = 150;
+
+    public string CssClass { get; set; } = "profile-picture";
+
+    public bool HasProfilePicture()
+    {
+        return User?.ProfilePicture != null && User.ProfilePicture.Length > 0;
+    }
 }
