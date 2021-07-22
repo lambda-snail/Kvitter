@@ -1,31 +1,21 @@
 using Infrastructure.Areas.Identity;
 using Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 using Flow.Infrastructure.DataAccess.Repositories;
 using MediatR;
 using Flow.Core.Contracts;
 using Flow.Core.DomainModels;
-using MongoDB.Bson.Serialization;
-using AutoMapper;
-using MongoDB.Bson.Serialization.IdGenerators;
-using MongoDB.Bson;
 using FlowUI.Utilities.LoggedInUserRequest;
+using Flow.Infrastructure.DataAccess;
 
 namespace FlowUI
 {
@@ -62,7 +52,7 @@ namespace FlowUI
             if (!string.IsNullOrWhiteSpace(Configuration.GetConnectionString("MongoDb")))
                 services.AddSingleton<IMongoClient>(new MongoClient(Configuration.GetConnectionString("MongoDb")));
 
-            RegisterBsonClassMaps();
+            BsonClassMapRegistrator.RegisterBsonClassMaps();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
@@ -97,30 +87,6 @@ namespace FlowUI
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
-        }
-
-        /** Register class maps for MongoDb */
-        public void RegisterBsonClassMaps()
-        {
-            BsonClassMap.RegisterClassMap<User>(cm =>
-            {
-                cm.AutoMap();
-                cm.MapIdProperty(user => user.UserId);
-            });
-
-            BsonClassMap.RegisterClassMap<Post>(cm =>
-            {
-                cm.AutoMap();
-                cm.SetIdMember(cm.GetMemberMap(post => post.PostId));
-                cm.IdMemberMap.SetIgnoreIfDefault(true);
-                cm.IdMemberMap.SetIdGenerator(CombGuidGenerator.Instance);
-            });
-
-            
-            //BsonDefaults.GuidRepresentation = GuidRepresentation.Standard;
-
-            //BsonSerializer.UseNullIdChecker = true; // used for reference types
-            //BsonSerializer.UseZeroIdChecker = true; // used for value types
         }
     }
 }
