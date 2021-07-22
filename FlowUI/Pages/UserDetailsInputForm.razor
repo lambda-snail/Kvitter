@@ -42,8 +42,8 @@
     <div class="form-group col-md-6">
         <label for="age">Age</label>
         <InputText id="age"
-                       class="form-control"
-                       @bind-Value="@LoggedInUser.Age">
+                   class="form-control"
+                   @bind-Value="@LoggedInUser.Age">
         </InputText>
         <small id="age-small" class="form-text text-muted">Enter your age.</small>
         <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => LoggedInUser.Age)" />
@@ -73,5 +73,21 @@
 
 </EditForm>
 
+<br />
+<hr />
 
+<h3>Upload Profile Picture</h3>
 
+@if (LoggedInUser.ProfilePicture == null || LoggedInUser.ProfilePicture.Length == 0)
+{
+    <p>You have not uploaded a picture yet. Consider uploading one for greater impact!</p>
+}
+else
+{
+    <img alt="" src="@("data:image/png;base64," + Convert.ToBase64String(@LoggedInUser.ProfilePicture, 0, @LoggedInUser.ProfilePicture.Length))" style="height:250px;width:250px;" />
+}
+
+<InputFile OnChange="@ProfilePictureSelected" />
+
+<br />
+<hr />

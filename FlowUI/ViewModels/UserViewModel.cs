@@ -28,5 +28,7 @@ namespace FlowUI.ViewModels
 
         [Required]
         public DateTimeOffset SignUpTime { get; set; }
+
+        public byte[] ProfilePicture { get; set; }
     }
 }

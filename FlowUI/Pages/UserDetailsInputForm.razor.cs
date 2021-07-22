@@ -6,6 +6,7 @@ using FlowUI.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -46,6 +47,21 @@ namespace FlowUI.Pages
         protected async Task HandleInvalidSubmit()
         {
 
+        }
+
+        //public string Image { get; set; }
+
+        private async Task ProfilePictureSelected(InputFileChangeEventArgs evt)
+        {
+            var i = await evt.File.RequestImageFileAsync("jpg", 250, 250);
+
+            var x = i.OpenReadStream();
+            byte[] img = new byte[x.Length];
+            await x.ReadAsync(img, 0, img.Length);
+
+            LoggedInUser.ProfilePicture = img;
+
+            //Image = "data:image/png;base64," + Convert.ToBase64String(img, 0, img.Length);
         }
     }
 }

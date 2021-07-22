@@ -20,6 +20,8 @@ namespace Flow.Core.DomainModels
         /** The date and time when the user signed up. */
         public DateTimeOffset SignUpTime { get; set; }
 
+        public byte[] ProfilePicture { get; set; }
+
         //public ICollection<Post> Posts { get; set; }
         //public ICollection<User> Friends { get; set; }
         //public ICollection<User> BlockedUsers { get; set; }
