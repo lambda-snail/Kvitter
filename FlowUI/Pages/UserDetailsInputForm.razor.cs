@@ -45,8 +45,8 @@ namespace FlowUI.Pages
 
         }
 
-        //public string Image { get; set; }
-
+        // TODO: Find a nicer way to handle profile pictures.
+        // TODO: Add validation of user input images.
         private async Task ProfilePictureSelected(InputFileChangeEventArgs evt)
         {
             var i = await evt.File.RequestImageFileAsync("jpg", 250, 250);
