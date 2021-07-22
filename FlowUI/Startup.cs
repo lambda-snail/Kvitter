@@ -25,6 +25,7 @@ using MongoDB.Bson.Serialization;
 using AutoMapper;
 using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Bson;
+using FlowUI.Utilities.LoggedInUserRequest;
 
 namespace FlowUI
 {
@@ -55,6 +56,7 @@ namespace FlowUI
             
             //services.AddMediatR(typeof(Startup));
             services.AddMediatR(typeof(User));
+            services.AddMediatR(typeof(GetLoggedInUserRequest));
 
             // Set up MongoDb
             if (!string.IsNullOrWhiteSpace(Configuration.GetConnectionString("MongoDb")))

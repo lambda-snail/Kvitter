@@ -2,6 +2,7 @@
 using Flow.Core.DomainModels;
 using Flow.Core.Mediate.InsertPost;
 using Flow.Core.Mediate.UserQuery;
+using FlowUI.Utilities.LoggedInUserRequest;
 using FlowUI.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Components;
@@ -27,9 +28,6 @@ namespace FlowUI.Pages
         [Parameter]
         public EventCallback OnPostCreated { get; set; }
 
-        [CascadingParameter]
-        private Task<AuthenticationState> authenticationStateTask { get; set; }
-
         protected override void OnInitialized()
         {
             ShowDialog = false;
@@ -38,7 +36,7 @@ namespace FlowUI.Pages
         public async Task HandleValidSubmit()
         {
             Post.PostedDateTime = System.DateTimeOffset.Now;
-            Post.PostOwnerId = (await GetLoggedInUserAsync()).UserId;
+            Post.PostOwnerId = (await _mediator.Send(new GetLoggedInUserRequest())).UserId;
 
             await _mediator.Send( new InsertPostRequest { Post= _mapper.Map<Post>(Post) } );
 
@@ -75,14 +73,6 @@ namespace FlowUI.Pages
         private void ResetDialog()
         {
             Post = new NewPostViewModel { Title = string.Empty, Content = string.Empty };
-        }
-
-        // TODO: Violates DRY, refactor to promote code reuse.
-        protected async Task<User> GetLoggedInUserAsync()
-        {
-            AuthenticationState authenticationState = await authenticationStateTask;
-            string userId = authenticationState.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return await _mediator.Send(new GetUserByIdRequest { UserId = Guid.Parse(userId) });
         }
     }
 }

@@ -2,6 +2,7 @@
 using Flow.Core.DomainModels;
 using Flow.Core.Mediate.UpsertUser;
 using Flow.Core.Mediate.UserQuery;
+using FlowUI.Utilities.LoggedInUserRequest;
 using FlowUI.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Components;
@@ -24,18 +25,13 @@ namespace FlowUI.Pages
         [Inject]
         public NavigationManager _navigationManager { get; set; }
 
-        [CascadingParameter]
-        protected Task<AuthenticationState> authenticationStateTask { get; set; }
-
         private UserViewModel LoggedInUser { get; set; } = new UserViewModel();
 
         public UserDetailsInputForm() { }
         
         protected override async Task OnInitializedAsync()
         {
-            AuthenticationState authenticationState = await authenticationStateTask;
-            string userId = authenticationState.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            LoggedInUser = _mapper.Map<UserViewModel>(await _mediator.Send(new GetUserByIdRequest { UserId = Guid.Parse(userId) }));
+            LoggedInUser = await _mediator.Send(new GetLoggedInUserRequest());
         }
 
         protected async Task HandleValidSubmit()
