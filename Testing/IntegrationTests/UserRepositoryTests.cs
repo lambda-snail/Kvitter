@@ -6,6 +6,7 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xunit;
@@ -96,6 +97,50 @@ namespace Testing
 
             Assert.Equal(userToChange.FirstName, changedUser.FirstName);
             Assert.Equal(userToChange.Age, changedUser.Age);
+        }
+
+        [Fact]
+        public async Task GetUserByIdAsync_ReturnsExistingUser()
+        {
+            // Arrange
+            await InitData();
+            User existingUser = u1;
+
+            // Act
+            User foundUser = await _repository.GetUserByIdAsync(existingUser.UserId);
+
+            // Assert
+            Assert.Equal(existingUser.UserId.ToString(), foundUser.UserId.ToString());
+            Assert.Equal(existingUser.FirstName, foundUser.FirstName);
+            Assert.Equal(existingUser.Age, foundUser.Age);
+        }
+
+        [Fact]
+        public async Task GetUserByIdAsync_ReturnsNullWhenNonExisting()
+        {
+            // Arrange
+            await InitData();
+            Guid nonexistingUserId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+
+            // Act
+            User foundUser = await _repository.GetUserByIdAsync(nonexistingUserId);
+
+            // Assert
+            Assert.Null(foundUser);
+        }
+
+        [Fact]
+        public async Task FindUsersAsync_FilterByLastName_ShouldReturnTwoUsers()
+        {
+            // Arrange
+            await InitData();
+            string filterName = "Baggins";
+
+            // Act
+            ICollection<User> foundUsers = await _repository.FindUsersAsync(u => u.LastName == filterName);
+
+            // Assert
+            Assert.Equal(2, foundUsers.Count);
         }
     }
 }
