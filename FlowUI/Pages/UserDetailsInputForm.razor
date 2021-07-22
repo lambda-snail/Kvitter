@@ -84,7 +84,7 @@
 }
 else
 {
-    <img alt="" src="@("data:image/png;base64," + Convert.ToBase64String(@LoggedInUser.ProfilePicture, 0, @LoggedInUser.ProfilePicture.Length))" style="height:250px;width:250px;" />
+    <ProfileImageDisplay User="@LoggedInUser" SizeX="150" SizeY="200" />
 }
 
 <InputFile OnChange="@ProfilePictureSelected" />

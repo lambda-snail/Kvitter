@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
 using Flow.Core.DomainModels;
 using Flow.Core.Mediate.UpsertUser;
-using Flow.Core.Mediate.UserQuery;
 using FlowUI.Utilities.LoggedInUserRequest;
 using FlowUI.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
-using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 
