@@ -21,7 +21,6 @@ namespace Flow.Infrastructure.DataAccess.Repositories
 
         public async Task UpsertUserAsync(User user)
         {
-            BsonBinaryData binGuid = new BsonBinaryData(user.UserId, GuidRepresentation.Standard);
             await _usersDb.ReplaceOneAsync(
                 u => u.UserId == user.UserId,
                 user,
