@@ -1,4 +1,6 @@
 
+[![Build status](https://dev.azure.com/blombergniclas/Flow/_apis/build/status/Flow-CI)](https://dev.azure.com/blombergniclas/Flow/_build/latest?definitionId=1)
+
 # Flow
 
 A light-weight social media platform. The platform is built with these purposes in mind:
