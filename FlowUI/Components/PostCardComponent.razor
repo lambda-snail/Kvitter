@@ -2,7 +2,9 @@
 
     @if (PostOwner != null)
     {
-        <div class="card-header">@PostOwner.FirstName @PostOwner.LastName</div>
+    <div class="card-header">
+        <a class="nav-link active" href=@($"/Profile/{PostOwner.UserId.ToString()}")>@PostOwner.FirstName @PostOwner.LastName</a>
+    </div>
     }
     else
     {
