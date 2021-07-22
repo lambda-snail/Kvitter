@@ -1,0 +1,25 @@
+﻿@page "/Profile/{UserId}"
+@attribute [Authorize]
+
+<h3>ProfileDetails</h3>
+
+@if (User == null)
+{
+    <p>Loading data ...</p>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <ProfileImageDisplay User="@this.User" SizeX="150" SizeY="200"/>
+            </div>
+            <div class="col-lg">
+                <p>@User.FirstName @User.LastName</p>
+                <p>Age: @User.Age</p>
+
+                <p>@User.Description</p>
+            </div>
+        </div>
+    </div>
+}
