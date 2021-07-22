@@ -31,9 +31,11 @@ The project just started, so there is a lot of work to be done. Some features th
 
 - User registration/login
     + Users can edit basic details of their profile.
+    + Users can upload a profile picture.
 
 - Posting content to the feed
     + The page is refreshed when the user creates a post.
+    + Posts link to profile details page.
 
 - Viewing the feeds of other users ("world feed")
     + Only posts that are actually visible on the screen are fetched from DB and rendered.
