@@ -1,6 +1,6 @@
-﻿using AutoMapper;
+﻿using Flow.Core.DomainModels;
 using Flow.Core.Mediate.UserQuery;
-using FlowUI.ViewModels;
+using FlowUI.Utilities.LoggedInUserRequest;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -11,15 +11,19 @@ namespace FlowUI.Pages
     public partial class ProfileDetails
     {
         [Inject]
-        private IMapper _mapper { get; set; }
-        [Inject]
         private IMediator _mediator { get; set; }
 
         [Parameter]
-        public String UserId { get; set; }
+        public string UserId { get; set; }
 
-        public UserViewModel User { get; set; }
-        public bool IsLoggedInUser { get; set; } = false;
+        public User User { get; set; }
+
+        public Guid LoggedInUserId { get; set; }
+
+        public bool IsLoggedInUser
+        { 
+            get => LoggedInUserId == User.UserId; 
+        }
 
 
         public ProfileDetails() {}
@@ -27,9 +31,14 @@ namespace FlowUI.Pages
         protected override async Task OnInitializedAsync()
         {
             Guid guidId = Guid.Parse(UserId);
-            User = _mapper.Map<UserViewModel>(
-                    await _mediator.Send(new GetUserByIdRequest { UserId = guidId })
-                );
+            User = await _mediator.Send(new GetUserByIdRequest { UserId = guidId });
+            
+            LoggedInUserId = await _mediator.Send(new GetIdLoggedInUserRequest());
+        }
+
+        protected async Task AddFriendButtonPressed()
+        {
+
         }
     }
 }
