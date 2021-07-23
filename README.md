@@ -15,7 +15,7 @@ Another major reason for the project is to try out some lessons that I learned f
 
 ## Libraries
 
-The platform uses MediatR for CQRS and AutoMapper to facilitate mapping between objects in different layers.
+The platform uses MediatR for CQRS and AutoMapper to facilitate mapping between objects in different layers. For testing the libraries xUnit, Moq and mongo2go are used.
 
   
 ## Roadmap
