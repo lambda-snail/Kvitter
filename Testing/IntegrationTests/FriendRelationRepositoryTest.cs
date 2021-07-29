@@ -88,5 +88,18 @@ namespace Testing.IntegrationTests
                 }
             }
         }
+
+        [Fact]
+        public async Task GetNonexistingRelationship_ShouldBeEmpty()
+        {
+            // Arrange
+            await InitData();
+
+            // Act
+            IEnumerable<FriendRelation> shouldBeEmpty = await _repository.GetByUserId(Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"));
+
+            // Assert
+            Assert.Empty(shouldBeEmpty);
+        }
     }
 }
