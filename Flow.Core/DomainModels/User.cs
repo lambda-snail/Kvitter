@@ -22,7 +22,7 @@ namespace Flow.Core.DomainModels
 
         public byte[] ProfilePicture { get; set; }
 
-        public ICollection<User> Friends { get; set; }
+        public List<FriendModel> Friends { get; set; }
 
         //public ICollection<User> BlockedUsers { get; set; }
     }

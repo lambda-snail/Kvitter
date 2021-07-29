@@ -22,7 +22,7 @@ namespace Flow.Infrastructure.DataAccess.Repositories
         {
             if (post.PostId != Guid.Empty)
             {
-                throw new ArgumentException("Error: Attempting to add a post with non-null or non-default Id. Did you mean to update instead?");
+                throw new InvalidOperationException("Error: Attempting to add a post with non-null or non-default Id. Did you mean to update instead?");
             }
 
             await _database.InsertOneAsync(post);

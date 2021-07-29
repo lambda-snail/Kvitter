@@ -1,11 +1,6 @@
 ﻿using Flow.Core.DomainModels;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.IdGenerators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Flow.Infrastructure.DataAccess
 {
@@ -19,6 +14,7 @@ namespace Flow.Infrastructure.DataAccess
                 {
                     cm.AutoMap();
                     cm.MapIdProperty(user => user.UserId);
+                    cm.UnmapProperty(user => user.Friends);
                 });
             }
 
@@ -30,6 +26,16 @@ namespace Flow.Infrastructure.DataAccess
                     cm.SetIdMember(cm.GetMemberMap(post => post.PostId));
                     cm.IdMemberMap.SetIgnoreIfDefault(true);
                     cm.IdMemberMap.SetIdGenerator(CombGuidGenerator.Instance);
+                });
+            }
+
+            if (!BsonClassMap.IsClassMapRegistered(typeof(FriendRelation)))
+            {
+                BsonClassMap.RegisterClassMap<FriendRelation>(cm =>
+                {
+                    cm.AutoMap();
+                    cm.SetIdMember(cm.GetMemberMap(r => r.Id));
+                    cm.IdMemberMap.SetIgnoreIfDefault(true);
                 });
             }
         }
