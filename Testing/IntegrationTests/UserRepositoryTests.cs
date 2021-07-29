@@ -2,16 +2,13 @@ using Flow.Core.DomainModels;
 using Flow.Infrastructure.DataAccess;
 using Flow.Infrastructure.DataAccess.Repositories;
 using Mongo2Go;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Testing
+namespace Testing.IntegrationTests
 {
     public class UserRepositoryTests : IDisposable
     {
