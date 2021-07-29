@@ -1,4 +1,10 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@using Microsoft.AspNetCore.Components;
+@using MediatR;
+@using FlowUI.Utilities.LoggedInUserRequest;
+@using Flow.Core.DomainModels
+@using Flow.Core.Mediate.UserQuery
+
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">Flow</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -7,6 +13,10 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
+        <li class="d-flex justify-content-center px-3">
+            <ProfileImageDisplay User="@LoggedInUser" SizeX="150" SizeY="200" />
+        </li>
+
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="worldflow">
                 <span class="oi oi-globe" aria-hidden="true"></span> World Flow
@@ -22,12 +32,27 @@
 </div>
 
 @code {
+    [Inject]
+    private IMediator _mediator { get; set; }
+
     private bool collapseNavMenu = true;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
+    private User LoggedInUser { get; set; } = new User();
+
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Guid loggedInUserId = await _mediator.Send(new GetIdLoggedInUserRequest());
+
+        if (loggedInUserId != Guid.Empty)
+        {
+            LoggedInUser = await _mediator.Send(new GetUserByIdRequest { UserId = loggedInUserId });
+        }
     }
 }
