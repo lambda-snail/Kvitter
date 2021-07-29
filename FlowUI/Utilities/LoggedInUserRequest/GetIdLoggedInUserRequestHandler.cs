@@ -20,7 +20,15 @@ namespace FlowUI.Utilities.LoggedInUserRequest
         {
             AuthenticationState authenticationState = await _AuthenticationStateProvider.GetAuthenticationStateAsync();
             string userId = authenticationState.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return Guid.Parse(userId);
+
+            if(string.IsNullOrWhiteSpace(userId))
+            {
+                return Guid.Empty;
+            }
+            else
+            {
+                return Guid.Parse(userId);
+            }
         }
     }
 }
