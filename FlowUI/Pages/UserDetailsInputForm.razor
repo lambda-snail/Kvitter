@@ -75,19 +75,3 @@
 
 <br />
 <hr />
-
-<h3>Upload Profile Picture</h3>
-
-@if (LoggedInUser.ProfilePicture == null || LoggedInUser.ProfilePicture.Length == 0)
-{
-    <p>You have not uploaded a picture yet. Consider uploading one for greater impact!</p>
-}
-else
-{ // TODO: Move this somewhere else
-    <!--   <ProfileImageDisplay User="@LoggedInUser" SizeX="150" SizeY="200" />  -->
-}
-
-<InputFile OnChange="@ProfilePictureSelected" />
-
-<br />
-<hr />

@@ -1,8 +1,11 @@
-﻿@using Microsoft.AspNetCore.Components;
+﻿@using Microsoft.AspNetCore.Components
 @using MediatR;
-@using FlowUI.Utilities.LoggedInUserRequest;
+@using FlowUI.Pages
+@using FlowUI.Utilities.LoggedInUserRequest
 @using Flow.Core.DomainModels
 @using Flow.Core.Mediate.UserQuery
+
+<ProfileImageEditModal StateChangedNotifyParentComponent="OnProfilePictureChanged" @ref="ProfilePictureForm"></ProfileImageEditModal>
 
 <div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">Flow</a>
@@ -14,7 +17,9 @@
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
         <li class="d-flex justify-content-center px-3">
-            <ProfileImageDisplay User="@LoggedInUser" SizeX="150" SizeY="200" />
+            <a @onclick="OpenProfilePictureForm">
+                <ProfileImageDisplay @ref="ProfileImage" User="@LoggedInUser" SizeX="150" SizeY="200" />
+            </a>
         </li>
 
         <li class="nav-item px-3">
@@ -35,6 +40,10 @@
     [Inject]
     private IMediator _mediator { get; set; }
 
+    public ProfileImageEditModal ProfilePictureForm { get; set; }
+
+    private ProfileImageDisplay ProfileImage { get; set; }
+
     private bool collapseNavMenu = true;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -48,11 +57,28 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await GetLoggedInUser();
+    }
+
+    public async Task GetLoggedInUser()
+    {
         Guid loggedInUserId = await _mediator.Send(new GetIdLoggedInUserRequest());
 
         if (loggedInUserId != Guid.Empty)
         {
             LoggedInUser = await _mediator.Send(new GetUserByIdRequest { UserId = loggedInUserId });
         }
+    }
+
+    public async Task OpenProfilePictureForm()
+    {
+        await ProfilePictureForm.OpenDialog();
+    }
+
+    public async Task OnProfilePictureChanged()
+    {
+        await GetLoggedInUser();
+        ProfileImage.Refresh();
+        StateHasChanged();
     }
 }

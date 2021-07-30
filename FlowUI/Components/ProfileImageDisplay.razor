@@ -34,4 +34,9 @@ else
     {
         return User?.ProfilePicture != null && User.ProfilePicture.Length > 0;
     }
+
+    public void Refresh()
+    {
+        StateHasChanged();
+    }
 }
