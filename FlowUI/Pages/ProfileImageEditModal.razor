@@ -1,0 +1,43 @@
+﻿
+@if (ShowDialog)
+{
+
+    <div class="modal fade show d-block" id="new-post-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titleLabel">Upload Profile Picture</h5>
+                    <button type="button" class="close" @onclick="@CloseDialog" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <EditForm Model="@LoggedInUser"
+                              OnValidSubmit="@HandleValidSubmit"
+                              OnInvalidSubmit="@HandleInvalidSubmit">
+
+                        @if (LoggedInUser.ProfilePicture == null || LoggedInUser.ProfilePicture.Length == 0)
+                        {
+                            <p>You have not uploaded a picture yet. Consider uploading one for greater impact!</p>
+                        }
+
+                        <ProfileImageDisplay User="@LoggedInUser" SizeX="112" SizeY="150" />
+
+                        <InputFile OnChange="@ProfilePictureSelected" />
+
+                        <button type="submit" class="btn btn-primary edit-btn">Submit</button>
+
+                    </EditForm>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
