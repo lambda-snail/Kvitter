@@ -37,7 +37,7 @@ namespace FlowUI.Pages
             }
 
             ICollection<Post> posts = await _mediator.Send(new GetFriendPostsRequest(userIds, request.StartIndex, request.Count));
-            var totalPostCount = await _mediator.Send(new EstimatePostCountRequest()); // TODO: Should get number of friends posts here
+            var totalPostCount = await _mediator.Send(new EstimatePostCountRequest { UserIds = userIds }); // TODO: Should get number of friends posts here
             return new ItemsProviderResult<Post>(posts, (int)totalPostCount); // This might need tweaking if the application grows
         }
     }

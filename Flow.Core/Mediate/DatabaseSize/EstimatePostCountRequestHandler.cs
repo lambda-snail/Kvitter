@@ -16,7 +16,14 @@ namespace Flow.Core.Mediate.DatabaseSize
 
         public async Task<long> Handle(EstimatePostCountRequest request, CancellationToken cancellationToken)
         {
-            return await _repository.GetEstimatedNumberOfPosts();
+            if (request.UserIds?.Count >= 0)
+            {
+                return await _repository.GetEstimatedNumberOfPosts(request.UserIds);
+            }
+            else
+            {
+                return await _repository.GetEstimatedNumberOfPosts();
+            }
         }
     }
 }

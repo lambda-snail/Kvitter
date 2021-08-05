@@ -99,5 +99,11 @@ namespace Flow.Infrastructure.DataAccess.Repositories
         {
             return await _database.EstimatedDocumentCountAsync();
         }
+
+        public async Task<long> GetEstimatedNumberOfPosts(IEnumerable<Guid> userIds)
+        {
+            FilterDefinition<Post> filter = Builders<Post>.Filter.In(post => post.PostOwnerId, userIds);
+            return await _database.CountDocumentsAsync(filter);
+        }
     }
 }

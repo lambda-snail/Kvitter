@@ -49,8 +49,13 @@ namespace Flow.Core.Contracts
         Task UpdatePost(Post post);
 
         /**
-         * Retreive the number of Posts in the database.
+         * Retrieve the number of Posts in the database.
          */
         Task<long> GetEstimatedNumberOfPosts();
+
+        /**
+         * Retrieve the number of posts in the database, that are owned by any of the users in the specified collection.
+         */
+        Task<long> GetEstimatedNumberOfPosts(IEnumerable<Guid> userIds);
     }
 }
