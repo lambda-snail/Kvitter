@@ -1,9 +1,11 @@
 ﻿@page "/Profile/{UserId}"
 @attribute [Authorize]
 
+@using System.Linq
+
 <h3>ProfileDetails</h3>
 
-@if (User == null)
+@if (PageOwnerUser == null)
 {
     <p>Loading data ...</p>
 }
@@ -12,26 +14,35 @@ else
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
-                <ProfileImageDisplay User="@this.User" SizeX="150" SizeY="200" />
+                <ProfileImageDisplay User="@this.PageOwnerUser" SizeX="150" SizeY="200" />
             </div>
             <div class="col-lg">
-                <p>@User.FirstName @User.LastName</p>
-                <p>Age: @User.Age</p>
+                <p>@PageOwnerUser.FirstName @PageOwnerUser.LastName</p>
+                <p>Age: @PageOwnerUser.Age</p>
 
-                <p>@User.Description</p>
+                <p>@PageOwnerUser.Description</p>
             </div>
         </div>
-        @if (!IsLoggedInUser)
-        {
-            <div class="row">
-                <div class="col-lg-2">
-                    <div @onclick="@AddFriendButtonPressed" id="add-friend-button" class="btn btn-dark">Add Friend</div>
-                </div>
-            </div>
-        }
-        else
+
+        @if (IsLoggedInUser)
         {
             <p>This is your page.</p>
         }
+        else
+        {
+            if (LoggedInUser.Friends.Any(friend => friend.UserId == PageOwnerUser.UserId))
+            {
+                <p>This user is already your friend.</p>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div @onclick="@AddFriendButtonPressed" id="add-friend-button" class="btn btn-dark">Add Friend</div>
+                    </div>
+                </div>
+            }
+        }
+
     </div>
 }

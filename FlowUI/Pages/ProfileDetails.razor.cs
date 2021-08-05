@@ -5,6 +5,7 @@ using FlowUI.Utilities.LoggedInUserRequest;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FlowUI.Pages
@@ -17,13 +18,15 @@ namespace FlowUI.Pages
         [Parameter]
         public string UserId { get; set; }
 
-        public User User { get; set; }
+        public User PageOwnerUser { get; set; }
+
+        public User LoggedInUser { get; set; } = new User();
 
         public Guid LoggedInUserId { get; set; }
 
         public bool IsLoggedInUser
         { 
-            get => LoggedInUserId == User.UserId; 
+            get => LoggedInUserId == PageOwnerUser.UserId; 
         }
 
 
@@ -32,13 +35,14 @@ namespace FlowUI.Pages
         protected override async Task OnInitializedAsync()
         {
             Guid guidId = Guid.Parse(UserId);
-            User = await _mediator.Send(new GetUserByIdRequest { UserId = guidId });
+            PageOwnerUser = await _mediator.Send(new GetUserByIdRequest { UserId = guidId });
             LoggedInUserId = await _mediator.Send(new GetIdLoggedInUserRequest());
+            LoggedInUser = await _mediator.Send( new GetUserByIdRequest { UserId = LoggedInUserId } );
         }
 
         protected async Task AddFriendButtonPressed()
         {
-            await _mediator.Send(new AddFriendRelationRequest(LoggedInUserId, User.UserId));
+            await _mediator.Send(new AddFriendRelationRequest(LoggedInUserId, PageOwnerUser.UserId));
         }
     }
 }
