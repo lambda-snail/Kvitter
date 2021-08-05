@@ -22,12 +22,20 @@ The platform uses MediatR for CQRS and AutoMapper to facilitate mapping between 
 
 The project just started, so there is a lot of work to be done. Some features that I aim to implement are (not in order):
 
-- Connecting with other users
-- Viewing the feeds of friends ("friends feed")
+### Use cases/high-level features
+
+- List of friends
 - Feed filter
 - Recursive liking of posts: Like a post, like that someone likes the post, like that someone likes that someone ...
-- "Mentions" in posts
 - Notifications
+- "Mentions" in posts
+
+### Technical stuff
+
+- Refactoring for promoting extendability and SOLID principles
+    + Refactor the way the logged in user is retrieved
+    + Add caching to reduce the number of trips to the DB
+    + Add validation and more graceful error handling
 
 ### Implemented
 
@@ -35,12 +43,19 @@ The project just started, so there is a lot of work to be done. Some features th
     + Users can edit basic details of their profile.
     + Users can upload a profile picture.
 
-- Posting content to the feed
+- Posting content to the flow
     + The page is refreshed when the user creates a post.
     + Posts link to profile details page.
 
-- Viewing the feeds of other users ("world feed")
+- Viewing the feeds of other users ("world flow")
     + Only posts that are actually visible on the screen are fetched from DB and rendered.
+
+- Connecting with other users
+    + Users can now connect with each other by pressing the "add" button on another user's profile page.
+
+- Viewing the posts made by friends only ("friend flow")
+    + If you want to see what your friends are doing you can navigate to the special flow dedicated to your friends.
+
 
 ### If I have more time:
 
