@@ -21,13 +21,17 @@ else
                 <p>@User.Description</p>
             </div>
         </div>
-        @if( !IsLoggedInUser )
+        @if (!IsLoggedInUser)
         {
             <div class="row">
                 <div class="col-lg-2">
                     <div @onclick="@AddFriendButtonPressed" id="add-friend-button" class="btn btn-dark">Add Friend</div>
                 </div>
             </div>
+        }
+        else
+        {
+            <p>This is your page.</p>
         }
     </div>
 }

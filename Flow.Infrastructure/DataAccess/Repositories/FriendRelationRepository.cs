@@ -1,4 +1,5 @@
-﻿using Flow.Core.DomainModels;
+﻿using Flow.Core.Contracts;
+using Flow.Core.DomainModels;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -13,7 +14,7 @@ namespace Flow.Infrastructure.DataAccess.Repositories
      * 2. In the second iteration, freind requests will need to be accepted first, and the Add method will
      * require two distinct ids to work.
      */
-    public class FriendRelationRepository
+    public class FriendRelationRepository : IFriendRelationRepository
     {
         private readonly IMongoCollection<FriendRelation> _database;
 
@@ -38,7 +39,7 @@ namespace Flow.Infrastructure.DataAccess.Repositories
             var f = new BsonDocument
             {
                 {
-                    "Users", new BsonDocument {{ 
+                    "Users", new BsonDocument {{
                                 "$elemMatch", new BsonDocument {{ "$eq", BsonBinaryData.Create(userId) }}
                     }}
                 }

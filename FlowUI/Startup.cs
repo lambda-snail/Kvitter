@@ -56,6 +56,7 @@ namespace FlowUI
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IFriendRelationRepository, FriendRelationRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

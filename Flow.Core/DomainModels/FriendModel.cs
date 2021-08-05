@@ -8,7 +8,10 @@ namespace Flow.Core.DomainModels
     public class FriendModel
     {
         public Guid UserId { get; set; }
+        public Object FriendRelationId { get; set; }
+
         public string FirstName { get; set; }
         public string ShortDescription { get; set; }
+        public DateTimeOffset WhenConnected { get; set; }
     }
 }

@@ -56,6 +56,25 @@ namespace Flow.Infrastructure.DataAccess.Repositories
             }
         }
 
+        public async Task<ICollection<Post>> GetPostsDescendingOrderByDateFromListOfIds(IEnumerable<Guid> userIds, int skip, int take)
+        {
+            if (userIds != null && skip >= 0 || take >= 0)
+            {
+                // { '_id': { '$in' : user.useritems} }
+                FilterDefinition<Post> filter = Builders<Post>.Filter.In(post => post.PostOwnerId, userIds);
+
+                return await _database.Find(filter)
+                                       .Sort(Builders<Post>.Sort.Descending(post => post.PostedDateTime))
+                                       .Skip(skip)
+                                       .Limit(take)
+                                       .ToListAsync();
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("Error: Attemtping to skip or retreive a negative number of posts.");
+            }
+        }
+
         public async Task<ICollection<Post>> GetPostByUserId(Guid userId)
         {
             return await GetPostByUserId(userId, 0, 0);

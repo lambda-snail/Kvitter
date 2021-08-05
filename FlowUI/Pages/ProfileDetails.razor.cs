@@ -1,4 +1,5 @@
 ﻿using Flow.Core.DomainModels;
+using Flow.Core.Mediate.AddFriendRelation;
 using Flow.Core.Mediate.UserQuery;
 using FlowUI.Utilities.LoggedInUserRequest;
 using MediatR;
@@ -32,13 +33,12 @@ namespace FlowUI.Pages
         {
             Guid guidId = Guid.Parse(UserId);
             User = await _mediator.Send(new GetUserByIdRequest { UserId = guidId });
-            
             LoggedInUserId = await _mediator.Send(new GetIdLoggedInUserRequest());
         }
 
         protected async Task AddFriendButtonPressed()
         {
-
+            await _mediator.Send(new AddFriendRelationRequest(LoggedInUserId, User.UserId));
         }
     }
 }
