@@ -33,27 +33,27 @@ The project just started, so there is a lot of work to be done. Some features th
 ### Technical stuff
 
 - Refactoring for promoting extendability and SOLID principles
-    + Refactor the way the logged in user is retrieved
+    + Refactor the way the logged in user is retrieved :white_check_mark:
     + Add caching to reduce the number of trips to the DB
     + Add validation and more graceful error handling
 
 ### Implemented
 
-- User registration/login
+- :white_check_mark: User registration/login
     + Users can edit basic details of their profile.
     + Users can upload a profile picture.
 
-- Posting content to the flow
+- :white_check_mark: Posting content to the flow
     + The page is refreshed when the user creates a post.
     + Posts link to profile details page.
 
-- Viewing the feeds of other users ("world flow")
+- :white_check_mark: Viewing the feeds of other users ("world flow")
     + Only posts that are actually visible on the screen are fetched from DB and rendered.
 
-- Connecting with other users
+- :white_check_mark: Connecting with other users
     + Users can now connect with each other by pressing the "add" button on another user's profile page.
 
-- Viewing the posts made by friends only ("friend flow")
+- :white_check_mark: Viewing the posts made by friends only ("friend flow")
     + If you want to see what your friends are doing you can navigate to the special flow dedicated to your friends.
 
 
