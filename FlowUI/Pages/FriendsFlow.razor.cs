@@ -1,8 +1,7 @@
-﻿using Flow.Core.DomainModels;
+﻿using Flow.Core.Contracts;
+using Flow.Core.DomainModels;
 using Flow.Core.Mediate.DatabaseSize;
 using Flow.Core.Mediate.GetFriendPosts;
-using Flow.Core.Mediate.UserQuery;
-using FlowUI.Utilities.LoggedInUserRequest;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web.Virtualization;
@@ -17,6 +16,9 @@ namespace FlowUI.Pages
         [Inject]
         protected IMediator _mediator { get; set; }
 
+        [Inject]
+        private ILoggedInUserService _loggedInUserService { get; set; }
+
         public User LoggedInUser { get; set; }
         public Virtualize<Post> PostVirtualizer { get; set; }
 
@@ -24,8 +26,7 @@ namespace FlowUI.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            Guid loggedInUserId = await _mediator.Send( new GetIdLoggedInUserRequest() );
-            LoggedInUser = await _mediator.Send( new GetUserByIdRequest { UserId = loggedInUserId } );
+            LoggedInUser = await _loggedInUserService.GetLoggedInUser();
         }
 
         public async ValueTask<ItemsProviderResult<Post>> LoadPostsPaged(ItemsProviderRequest request)

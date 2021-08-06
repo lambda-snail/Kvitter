@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using Flow.Core.Contracts;
 using Flow.Core.DomainModels;
 using Flow.Core.Mediate.InsertPost;
-using FlowUI.Utilities.LoggedInUserRequest;
 using FlowUI.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Components;
@@ -21,6 +21,9 @@ namespace FlowUI.Pages
         [Inject]
         private IMapper _mapper { get; set; }
 
+        [Inject]
+        private ILoggedInUserService _loggedInUserService { get; set; }
+
         [Parameter]
         public EventCallback OnPostCreated { get; set; }
 
@@ -32,7 +35,7 @@ namespace FlowUI.Pages
         public async Task HandleValidSubmit()
         {
             Post.PostedDateTime = System.DateTimeOffset.Now;
-            Post.PostOwnerId = (await _mediator.Send(new GetLoggedInUserRequest())).UserId;
+            Post.PostOwnerId = await _loggedInUserService.GetLoggedInUserId();
 
             await _mediator.Send( new InsertPostRequest { Post= _mapper.Map<Post>(Post) } );
 

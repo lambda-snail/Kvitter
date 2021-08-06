@@ -1,11 +1,9 @@
-﻿using Flow.Core.DomainModels;
+﻿using Flow.Core.Contracts;
+using Flow.Core.DomainModels;
 using Flow.Core.Mediate.UpsertUser;
-using Flow.Core.Mediate.UserQuery;
-using FlowUI.Utilities.LoggedInUserRequest;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using System;
 using System.Threading.Tasks;
 
 namespace FlowUI.Pages
@@ -16,6 +14,9 @@ namespace FlowUI.Pages
 
         [Inject]
         private IMediator _mediator { get; set; }
+
+        [Inject]
+        private ILoggedInUserService _loggedInUserService { get; set; }
 
         public User LoggedInUser { get; set; }
 
@@ -43,8 +44,7 @@ namespace FlowUI.Pages
         {
             if(LoggedInUser == null)
             {
-                Guid LoggedInUserId = await _mediator.Send(new GetIdLoggedInUserRequest());
-                LoggedInUser = await _mediator.Send(new GetUserByIdRequest { UserId = LoggedInUserId });
+                LoggedInUser = await _loggedInUserService.GetLoggedInUser();
             }
 
             if (LoggedInUser != null)

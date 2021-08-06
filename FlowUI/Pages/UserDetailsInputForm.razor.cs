@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
+using Flow.Core.Contracts;
 using Flow.Core.DomainModels;
 using Flow.Core.Mediate.UpsertUser;
-using FlowUI.Utilities.LoggedInUserRequest;
 using FlowUI.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using System.Threading.Tasks;
 
 
@@ -21,13 +20,16 @@ namespace FlowUI.Pages
         [Inject]
         public NavigationManager _navigationManager { get; set; }
 
+        [Inject]
+        private ILoggedInUserService _loggedInUserService { get; set; }
+
         private UserViewModel LoggedInUser { get; set; } = new UserViewModel();
 
         public UserDetailsInputForm() { }
         
         protected override async Task OnInitializedAsync()
         {
-            LoggedInUser = await _mediator.Send(new GetLoggedInUserRequest());
+            LoggedInUser = _mapper.Map<UserViewModel>(await _loggedInUserService.GetLoggedInUser());
         }
 
         protected async Task HandleValidSubmit()

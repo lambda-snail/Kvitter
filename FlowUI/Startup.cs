@@ -14,8 +14,8 @@ using Flow.Infrastructure.DataAccess.Repositories;
 using MediatR;
 using Flow.Core.Contracts;
 using Flow.Core.DomainModels;
-using FlowUI.Utilities.LoggedInUserRequest;
 using Flow.Infrastructure.DataAccess;
+using Flow.Infrastructure.Services;
 
 namespace FlowUI
 {
@@ -46,7 +46,6 @@ namespace FlowUI
             
             //services.AddMediatR(typeof(Startup));
             services.AddMediatR(typeof(User));
-            services.AddMediatR(typeof(GetLoggedInUserRequest));
 
             // Set up MongoDb
             if (!string.IsNullOrWhiteSpace(Configuration.GetConnectionString("MongoDb")))
@@ -57,6 +56,8 @@ namespace FlowUI
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IFriendRelationRepository, FriendRelationRepository>();
+
+            services.AddScoped<ILoggedInUserService, LoggedInUserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

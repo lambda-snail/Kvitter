@@ -1,4 +1,5 @@
-﻿using Flow.Core.DomainModels;
+﻿using Flow.Core.Contracts;
+using Flow.Core.DomainModels;
 using Flow.Core.Mediate.UserQuery;
 using MediatR;
 using Microsoft.AspNetCore.Components;
@@ -16,8 +17,6 @@ namespace FlowUI.Components
 
         [Inject]
         protected IMediator _mediator { get; set; }
-        [CascadingParameter]
-        protected Task<AuthenticationState> _authenticationStateTask { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
