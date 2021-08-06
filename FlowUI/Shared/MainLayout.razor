@@ -1,25 +1,31 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<AuthorizeView>
+    <Authorized>
 
-    <div class="main">
-        <div class="top-row px-4 auth">
-            <LoginDisplay />
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+        <div class="page">
+            <div class="sidebar">
+                <NavMenu />
+            </div>
 
-        <div class="content px-4">
-            <AuthorizeView>
-                <Authorized>
-                        @Body
-                </Authorized>
-                <NotAuthorized>
-                    <h3>Ooops, it seems you are not logged in!</h3>
-                </NotAuthorized>
-            </AuthorizeView>
+            <div class="main">
+                <div class="top-row px-4 auth">
+                    <LoginDisplay />
+                    <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+                </div>
+
+                <div class="content px-4">
+
+                    @Body
+
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    </Authorized>
+    <NotAuthorized>
+        <!-- TODO: Format this in a nicer way, or add redirect to login page -->
+        <h3>Ooops, it seems you are not logged in!</h3>
+        <a href="Identity/Account/Register">Register</a>
+        <a href="Identity/Account/Login">Log in</a>
+    </NotAuthorized>
+</AuthorizeView>

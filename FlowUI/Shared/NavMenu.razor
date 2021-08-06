@@ -1,9 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Components
 @using MediatR;
+
+@using Flow.Core.Contracts
 @using FlowUI.Pages
-@using FlowUI.Utilities.LoggedInUserRequest
 @using Flow.Core.DomainModels
-@using Flow.Core.Mediate.UserQuery
 
 <ProfileImageEditModal StateChangedNotifyParentComponent="OnProfilePictureChanged" @ref="ProfilePictureForm"></ProfileImageEditModal>
 
@@ -46,6 +46,9 @@
     [Inject]
     private IMediator _mediator { get; set; }
 
+    [Inject]
+    private ILoggedInUserService _loggedInUserService { get; set; }
+
     public ProfileImageEditModal ProfilePictureForm { get; set; }
 
     private ProfileImageDisplay ProfileImage { get; set; }
@@ -68,12 +71,7 @@
 
     public async Task GetLoggedInUser()
     {
-        Guid loggedInUserId = await _mediator.Send(new GetIdLoggedInUserRequest());
-
-        if (loggedInUserId != Guid.Empty)
-        {
-            LoggedInUser = await _mediator.Send(new GetUserByIdRequest { UserId = loggedInUserId });
-        }
+        LoggedInUser = await _loggedInUserService.GetLoggedInUser();
     }
 
     public async Task OpenProfilePictureForm()
