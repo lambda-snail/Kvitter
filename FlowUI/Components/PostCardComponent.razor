@@ -1,10 +1,10 @@
-﻿<div class="card text-white bg-dark mb-3 col-6" style="max-width: 36rem;">
+﻿<div class="post-card card bg-dark mb-3 col-6" style="max-width: 36rem;">
 
     @if (PostOwner != null)
     {
-    <div class="card-header">
-        <a class="nav-link active" href=@($"/Profile/{PostOwner.UserId.ToString()}")>@PostOwner.FirstName @PostOwner.LastName</a>
-    </div>
+        <div class="card-header">
+            <a class="nav-link active" href=@($"/Profile/{PostOwner.UserId.ToString()}")>@PostOwner.FirstName @PostOwner.LastName</a>
+        </div>
     }
     else
     {
@@ -17,6 +17,8 @@
     </div>
     @if (Post != null)
     {
-        <p>Post created on @Post.PostedDateTime.ToLocalTime().</p>
+        <div class="card-footer">
+            <p>Post created on @Post.PostedDateTime.ToLocalTime().</p>
+        </div>
     }
 </div>
