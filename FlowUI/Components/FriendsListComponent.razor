@@ -1,0 +1,26 @@
+﻿
+<div class="container friends-list" id="friends-flow-friends-list">
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <h3>Friends</h3>
+
+            @if (User != null && User?.Friends.Count > 0)
+            {
+                foreach (var friend in User.Friends)
+                {
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@friend.FirstName</h5>
+                            <p class="card-text">@friend.ShortDescription</p>
+                            <p class="card-text">Connected on: @friend.WhenConnected.ToLocalTime()</p>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>You have no friends yet!</p>
+            }
+        </div>
+    </div>
+</div>

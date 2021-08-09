@@ -7,34 +7,47 @@
 
 <br />
 <hr />
+<div class="container">
+    <div class="row justify-content-between">
+        <div class="col-md-6">
 
-<div class="main-post-feed">
+            <div class="main-post-feed">
 
-    @if (LoggedInUser?.Friends?.Count > 0)
-    {
+                @if (LoggedInUser?.Friends?.Count > 0)
+                {
 
-        <Virtualize ItemsProvider="LoadPostsPaged" ItemSize="250" @ref="PostVirtualizer">
-            <ItemContent>
+                    <Virtualize ItemsProvider="LoadPostsPaged" ItemSize="250" @ref="PostVirtualizer">
+                        <ItemContent>
 
-                <PostCardComponent Post="@context" />
+                            <PostCardComponent Post="@context" />
 
-            </ItemContent>
+                        </ItemContent>
 
-            <Placeholder>
+                        <Placeholder>
 
-                <div class="card text-white bg-dark mb-3 col-6" style="max-width: 36rem;">
-                    <div class="card-header">Loading...</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Loading ...</h5>
-                        <p class="card-text">Please wait while we are fetching things from the server!</p>
-                    </div>
-                </div>
+                            <div class="card text-white bg-dark mb-3 col-6" style="max-width: 36rem;">
+                                <div class="card-header">Loading...</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Loading ...</h5>
+                                    <p class="card-text">Please wait while we are fetching things from the server!</p>
+                                </div>
+                            </div>
 
-            </Placeholder>
-        </Virtualize>
-    }
-    else
-    {
-        <p>Oops, it looks like you don't have any friends yet :(</p>
-    }
+                        </Placeholder>
+                    </Virtualize>
+                }
+                else
+                {
+                    <p>Oops, it looks like you don't have any friends yet :(</p>
+                }
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <aside>
+                <FriendsListComponent User="@LoggedInUser" />
+            </aside>
+        </div>
+
+    </div>
 </div>
