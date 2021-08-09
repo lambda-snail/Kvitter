@@ -26,6 +26,7 @@ The project just started, so there is a lot of work to be done. Some features th
 
 - List of friends
 - Feed filter
+- "Cursor": When a user logs in, posts that are new since last time should be highlighted.
 - Recursive liking of posts: Like a post, like that someone likes the post, like that someone likes that someone ...
 - Notifications
 - "Mentions" in posts
